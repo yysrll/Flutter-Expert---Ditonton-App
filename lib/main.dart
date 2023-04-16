@@ -13,6 +13,7 @@ import 'package:ditonton/presentation/movie/provider/movie_search_notifier.dart'
 import 'package:ditonton/presentation/movie/provider/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/watchlist_movie_notifier.dart';
+import 'package:ditonton/presentation/tvseries/pages/home_tv_series_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,8 +60,10 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case '/home':
+            case HomeMoviePage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
+            case HomeTVSeriesPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => HomeTVSeriesPage());
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
             case TopRatedMoviesPage.ROUTE_NAME:
