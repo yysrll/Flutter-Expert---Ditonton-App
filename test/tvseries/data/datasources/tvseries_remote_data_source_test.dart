@@ -81,4 +81,34 @@ void main() {
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });
+
+  group('get Top Rated TV Series', () {
+    final tTVSeriesList = TVSeriesResponse.fromJson(
+            jsonDecode(readJson('dummy_data/top_rated.json')))
+        .tvSeriesList;
+
+    test('should return list of Movie Model when the response code is 200',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')))
+          .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/top_rated.json'), 200));
+      // act
+      final result = await dataSource.getTopRatedTVSeries();
+      // assert
+      expect(result, equals(tTVSeriesList));
+    });
+
+    test(
+        'should throw a ServerException when the response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+      // act
+      final call = dataSource.getTopRatedTVSeries();
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
 }

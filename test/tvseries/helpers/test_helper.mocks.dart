@@ -103,6 +103,23 @@ class MockTVSeriesRepository extends _i1.Mock
               ),
             )),
           ) as _i5.Future<_i2.Either<_i6.Failure, List<_i7.TVSeries>>>);
+  @override
+  _i5.Future<_i2.Either<_i6.Failure, List<_i7.TVSeries>>>
+      getTopRatedTVSeries() => (super.noSuchMethod(
+            Invocation.method(
+              #getTopRatedTVSeries,
+              [],
+            ),
+            returnValue:
+                _i5.Future<_i2.Either<_i6.Failure, List<_i7.TVSeries>>>.value(
+                    _FakeEither_0<_i6.Failure, List<_i7.TVSeries>>(
+              this,
+              Invocation.method(
+                #getTopRatedTVSeries,
+                [],
+              ),
+            )),
+          ) as _i5.Future<_i2.Either<_i6.Failure, List<_i7.TVSeries>>>);
 }
 
 /// A class which mocks [TVSeriesRemoteDataSource].
@@ -128,6 +145,16 @@ class MockTVSeriesRemoteDataSource extends _i1.Mock
       (super.noSuchMethod(
         Invocation.method(
           #getPopularTVSeries,
+          [],
+        ),
+        returnValue:
+            _i5.Future<List<_i9.TVSeriesModel>>.value(<_i9.TVSeriesModel>[]),
+      ) as _i5.Future<List<_i9.TVSeriesModel>>);
+  @override
+  _i5.Future<List<_i9.TVSeriesModel>> getTopRatedTVSeries() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTopRatedTVSeries,
           [],
         ),
         returnValue:

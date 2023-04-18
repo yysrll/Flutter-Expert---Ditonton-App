@@ -23,7 +23,8 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     Future.microtask(
         () => Provider.of<TVSeriesListNotifier>(context, listen: false)
           ..fetchOnAirTVSeries()
-          ..fetchPopularTVSeries());
+          ..fetchPopularTVSeries()
+          ..fetchTopRatedTVSeries());
   }
 
   @override
@@ -49,7 +50,7 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                 } else if (state == RequestState.Loaded) {
                   return TVSeriesList(data.onAirTVSeries);
                 } else {
-                  return Text('Failed: ${data.message}');
+                  return Text('Failed');
                 }
               }),
               _buildSubHeading(
@@ -64,6 +65,21 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                   );
                 } else if (state == RequestState.Loaded) {
                   return TVSeriesList(data.popularTVSeries);
+                } else {
+                  return Text('Failed');
+                }
+              }),_buildSubHeading(
+                title: 'Top Rated',
+                onTap: () => {}
+              ),
+              Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
+                final state = data.topRatedState;
+                if (state == RequestState.Loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state == RequestState.Loaded) {
+                  return TVSeriesList(data.topRatedTVSeries);
                 } else {
                   return Text('Failed');
                 }
