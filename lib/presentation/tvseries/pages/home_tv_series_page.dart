@@ -3,6 +3,7 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/presentation/core/pages/home_page.dart';
+import 'package:ditonton/presentation/tvseries/pages/popular_tvseries_page.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,8 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               }),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () => {},
+                onTap: () => Navigator.pushNamed(
+                    context, PopularTVSeriesPage.ROUTE_NAME),
               ),
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.popularState;
@@ -68,10 +70,8 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                 } else {
                   return Text('Failed');
                 }
-              }),_buildSubHeading(
-                title: 'Top Rated',
-                onTap: () => {}
-              ),
+              }),
+              _buildSubHeading(title: 'Top Rated', onTap: () => {}),
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedState;
                 if (state == RequestState.Loading) {
