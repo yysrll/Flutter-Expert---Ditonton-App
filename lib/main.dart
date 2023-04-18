@@ -15,7 +15,9 @@ import 'package:ditonton/presentation/movie/provider/top_rated_movies_notifier.d
 import 'package:ditonton/presentation/movie/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/tvseries/pages/home_tv_series_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/popular_tvseries_page.dart';
+import 'package:ditonton/presentation/tvseries/pages/top_rated_tvseries_page.dart';
 import 'package:ditonton/presentation/tvseries/provider/popular_tvseries_notifier.dart';
+import 'package:ditonton/presentation/tvseries/provider/top_rated_tvseries_notifier.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<PopularTVSeriesNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TopRatedTVSeriesNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -85,6 +90,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => HomeTVSeriesPage());
             case PopularTVSeriesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => PopularTVSeriesPage());
+            case TopRatedTVSeriesPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => TopRatedTVSeriesPage());
             case SearchPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => SearchPage());
             case WatchlistMoviesPage.ROUTE_NAME:
