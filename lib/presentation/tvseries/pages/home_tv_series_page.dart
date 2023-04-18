@@ -22,7 +22,8 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     super.initState();
     Future.microtask(
         () => Provider.of<TVSeriesListNotifier>(context, listen: false)
-          ..fetchOnAirTVSeries());
+          ..fetchOnAirTVSeries()
+          ..fetchPopularTVSeries());
   }
 
   @override
@@ -49,6 +50,22 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                   return TVSeriesList(data.onAirTVSeries);
                 } else {
                   return Text('Failed: ${data.message}');
+                }
+              }),
+              _buildSubHeading(
+                title: 'Popular',
+                onTap: () => {},
+              ),
+              Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
+                final state = data.popularState;
+                if (state == RequestState.Loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state == RequestState.Loaded) {
+                  return TVSeriesList(data.popularTVSeries);
+                } else {
+                  return Text('Failed');
                 }
               }),
             ],

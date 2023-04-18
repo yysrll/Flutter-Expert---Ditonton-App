@@ -3,6 +3,7 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_on_air_tvseries.dart';
+import 'package:ditonton/domain/tvseries/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -10,17 +11,20 @@ import 'package:mockito/mockito.dart';
 
 import 'tvseries_list_provider_test.mocks.dart';
 
-@GenerateMocks([GetOnAirTVSeries])
+@GenerateMocks([GetOnAirTVSeries, GetPopularTVSeries])
 void main() {
   late TVSeriesListNotifier provider;
   late MockGetOnAirTVSeries mockGetOnAirTVSeries;
+  late MockGetPopularTVSeries mockGetPopularTVSeries;
   late int listenerCallCount;
 
   setUp(() {
     listenerCallCount = 0;
     mockGetOnAirTVSeries = MockGetOnAirTVSeries();
+    mockGetPopularTVSeries = MockGetPopularTVSeries();
     provider = TVSeriesListNotifier(
       getOnAirTVSeries: mockGetOnAirTVSeries,
+      getPopularTVSeries: mockGetPopularTVSeries,
     )..addListener(() {
         listenerCallCount += 1;
       });
@@ -59,8 +63,7 @@ void main() {
       verify(mockGetOnAirTVSeries.execute());
     });
 
-    test('should change state to Loading when usecase is called',
-        () async {
+    test('should change state to Loading when usecase is called', () async {
       // arrange
       when(mockGetOnAirTVSeries.execute())
           .thenAnswer((_) async => Right(tTVSeriesList));
@@ -75,7 +78,7 @@ void main() {
       // arrange
       when(mockGetOnAirTVSeries.execute())
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
-      
+
       // act
       await provider.fetchOnAirTVSeries();
 
@@ -85,8 +88,7 @@ void main() {
       expect(listenerCallCount, 2);
     });
 
-    test('should change movies when data is gotten successfully',
-        () async {
+    test('should change movies when data is gotten successfully', () async {
       // arrange
       when(mockGetOnAirTVSeries.execute())
           .thenAnswer((_) async => Right(tTVSeriesList));
@@ -95,6 +97,59 @@ void main() {
       // assert
       expect(provider.onAirState, equals(RequestState.Loaded));
       expect(provider.onAirTVSeries, equals(tTVSeriesList));
+      expect(listenerCallCount, 2);
+    });
+  });
+
+  group('popular TV Series', () {
+    test('initialState should be Empty', () {
+      expect(provider.popularState, equals(RequestState.Empty));
+    });
+
+    test('should get data from the usecase', () async {
+      // arrange
+      when(mockGetPopularTVSeries.execute())
+          .thenAnswer((_) async => Right(tTVSeriesList));
+      // act
+      provider.fetchPopularTVSeries();
+      // assert
+      verify(mockGetPopularTVSeries.execute());
+    });
+
+    test('should change state to Loading when usecase is called', () async {
+      // arrange
+      when(mockGetPopularTVSeries.execute())
+          .thenAnswer((_) async => Right(tTVSeriesList));
+      // act
+      provider.fetchPopularTVSeries();
+
+      // assert
+      expect(provider.popularState, equals(RequestState.Loading));
+    });
+
+    test('should emit Error when getting data fails', () async {
+      // arrange
+      when(mockGetPopularTVSeries.execute())
+          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+
+      // act
+      await provider.fetchPopularTVSeries();
+
+      // assert
+      expect(provider.popularState, equals(RequestState.Error));
+      expect(provider.message, 'Server Failure');
+      expect(listenerCallCount, 2);
+    });
+
+    test('should change movies when data is gotten successfully', () async {
+      // arrange
+      when(mockGetPopularTVSeries.execute())
+          .thenAnswer((_) async => Right(tTVSeriesList));
+      // act
+      await provider.fetchPopularTVSeries();
+      // assert
+      expect(provider.popularState, equals(RequestState.Loaded));
+      expect(provider.popularTVSeries, equals(tTVSeriesList));
       expect(listenerCallCount, 2);
     });
   });

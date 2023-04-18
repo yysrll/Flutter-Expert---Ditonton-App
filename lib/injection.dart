@@ -17,6 +17,7 @@ import 'package:ditonton/domain/movie/usecases/save_watchlist.dart';
 import 'package:ditonton/domain/movie/usecases/search_movies.dart';
 import 'package:ditonton/domain/tvseries/repositories/tvseries_repository.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_on_air_tvseries.dart';
+import 'package:ditonton/domain/tvseries/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/presentation/movie/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/movie_search_notifier.dart';
@@ -72,6 +73,7 @@ void init() {
   locator.registerFactory(
     () => TVSeriesListNotifier(
       getOnAirTVSeries: locator(),
+      getPopularTVSeries: locator(),
     ),
   );
 
@@ -89,6 +91,7 @@ void init() {
 
   // TV Series Use Case
   locator.registerLazySingleton(() => GetOnAirTVSeries(locator()));
+  locator.registerLazySingleton(() => GetPopularTVSeries(locator()));
 
   // Movies Repository
   locator.registerLazySingleton<MovieRepository>(
