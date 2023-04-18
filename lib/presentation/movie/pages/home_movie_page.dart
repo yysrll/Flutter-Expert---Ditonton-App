@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/movie/entities/movie.dart';
-import 'package:ditonton/presentation/main/pages/home_page.dart';
+import 'package:ditonton/presentation/core/pages/home_page.dart';
 import 'package:ditonton/presentation/movie/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/movie/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/movie/pages/top_rated_movies_page.dart';

@@ -1,10 +1,9 @@
+import 'package:ditonton/presentation/movie/pages/about_page.dart';
 import 'package:ditonton/presentation/movie/pages/home_movie_page.dart';
+import 'package:ditonton/presentation/movie/pages/search_page.dart';
+import 'package:ditonton/presentation/movie/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/home_tv_series_page.dart';
 import 'package:flutter/material.dart';
-
-import '../../movie/pages/about_page.dart';
-import '../../movie/pages/search_page.dart';
-import '../../movie/pages/watchlist_movies_page.dart';
 
 class HomePage extends StatelessWidget {
   final Widget title;
