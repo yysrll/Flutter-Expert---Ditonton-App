@@ -11,6 +11,7 @@ abstract class TVSeriesRemoteDataSource {
   Future<List<TVSeriesModel>> getPopularTVSeries();
   Future<List<TVSeriesModel>> getTopRatedTVSeries();
   Future<TVSeriesDetailModel> getTVSeriesDetail(int id);
+  Future<List<TVSeriesModel>> getTVSeriesRecommendations(int id);
 }
 
 class TVSeriesRemoteDataSourceImpl implements TVSeriesRemoteDataSource {
@@ -56,13 +57,24 @@ class TVSeriesRemoteDataSourceImpl implements TVSeriesRemoteDataSource {
       throw ServerException();
     }
   }
-  
+
   @override
   Future<TVSeriesDetailModel> getTVSeriesDetail(int id) async {
     final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
       return TVSeriesDetailModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+  
+  @override
+  Future<List<TVSeriesModel>> getTVSeriesRecommendations(int id) async {
+    final response = await client.get(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
+
+    if (response.statusCode == 200) {
+      return TVSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
     } else {
       throw ServerException();
     }

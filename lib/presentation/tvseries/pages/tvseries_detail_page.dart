@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/movie/entities/genre.dart';
+import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_detail_notifier.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class _TVSeriesDetailPageState extends State<TVSeriesDetailPage> {
             return SafeArea(
               child: TVSeriesDetailContent(
                 tvSeries: tvSeries,
+                recommendations: provider.tvSeriesRecommendations,
                 isAddedWatchlist: false,
               ),
             );
@@ -59,11 +61,13 @@ class _TVSeriesDetailPageState extends State<TVSeriesDetailPage> {
 
 class TVSeriesDetailContent extends StatelessWidget {
   final TVSeriesDetail tvSeries;
+  final List<TVSeries> recommendations;
   final bool isAddedWatchlist;
   const TVSeriesDetailContent({
     Key? key,
     required this.tvSeries,
     required this.isAddedWatchlist,
+    required this.recommendations,
   }) : super(key: key);
 
   @override
@@ -107,8 +111,7 @@ class TVSeriesDetailContent extends StatelessWidget {
                               style: kHeading5,
                             ),
                             ElevatedButton(
-                              onPressed: () async {
-                              },
+                              onPressed: () async {},
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -122,9 +125,6 @@ class TVSeriesDetailContent extends StatelessWidget {
                             Text(
                               _showGenres(tvSeries.genres),
                             ),
-                            // Text(
-                            //   _showDuration(tvSeries.episodeRunTime),
-                            // ),
                             Row(
                               children: [
                                 RatingBarIndicator(
@@ -152,62 +152,62 @@ class TVSeriesDetailContent extends StatelessWidget {
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            // Consumer<MovieDetailNotifier>(
-                            //   builder: (context, data, child) {
-                            //     if (data.recommendationState ==
-                            //         RequestState.Loading) {
-                            //       return Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     } else if (data.recommendationState ==
-                            //         RequestState.Error) {
-                            //       return Text(data.message);
-                            //     } else if (data.recommendationState ==
-                            //         RequestState.Loaded) {
-                            //       return Container(
-                            //         height: 150,
-                            //         child: ListView.builder(
-                            //           scrollDirection: Axis.horizontal,
-                            //           itemBuilder: (context, index) {
-                            //             final movie = recommendations[index];
-                            //             return Padding(
-                            //               padding: const EdgeInsets.all(4.0),
-                            //               child: InkWell(
-                            //                 onTap: () {
-                            //                   Navigator.pushReplacementNamed(
-                            //                     context,
-                            //                     MovieDetailPage.ROUTE_NAME,
-                            //                     arguments: movie.id,
-                            //                   );
-                            //                 },
-                            //                 child: ClipRRect(
-                            //                   borderRadius: BorderRadius.all(
-                            //                     Radius.circular(8),
-                            //                   ),
-                            //                   child: CachedNetworkImage(
-                            //                     imageUrl:
-                            //                         'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                            //                     placeholder: (context, url) =>
-                            //                         Center(
-                            //                       child:
-                            //                           CircularProgressIndicator(),
-                            //                     ),
-                            //                     errorWidget:
-                            //                         (context, url, error) =>
-                            //                             Icon(Icons.error),
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //           itemCount: recommendations.length,
-                            //         ),
-                            //       );
-                            //     } else {
-                            //       return Container();
-                            //     }
-                            //   },
-                            // ),
+                            Consumer<TVSeriesDetailNotifier>(
+                              builder: (context, data, child) {
+                                if (data.recommendationState ==
+                                    RequestState.Loading) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (data.recommendationState ==
+                                    RequestState.Error) {
+                                  return Text(data.message);
+                                } else if (data.recommendationState ==
+                                    RequestState.Loaded) {
+                                  return Container(
+                                    height: 150,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final tvseries = recommendations[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pushReplacementNamed(
+                                                context,
+                                                TVSeriesDetailPage.ROUTE_NAME,
+                                                arguments: tvseries.id,
+                                              );
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(8),
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://image.tmdb.org/t/p/w500${tvseries.posterPath}',
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: recommendations.length,
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -257,16 +257,5 @@ class TVSeriesDetailContent extends StatelessWidget {
     }
 
     return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
   }
 }
