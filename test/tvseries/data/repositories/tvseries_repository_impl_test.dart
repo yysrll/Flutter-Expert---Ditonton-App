@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
+import 'package:ditonton/data/tvseries/models/tvseries_detail_model.dart';
 import 'package:ditonton/data/tvseries/models/tvseries_model.dart';
 import 'package:ditonton/data/tvseries/repositories/tvseries_repository_impl.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../dummy_data/dummy_object.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
@@ -176,6 +178,76 @@ void main() {
       final result = await repository.getTopRatedTVSeries();
       // assert
       verify(mockRemoteDataSource.getTopRatedTVSeries());
+      expect(result,
+          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+    });
+  });
+
+  group('detail TV series', () {
+    final tId = 1;
+    final tTVSeriesDetailModel = TVSeriesDetailModel(
+      backdropPath: 'backdropPath',
+      episodeRunTime: [1, 2, 3],
+      firstAirDate: 'firstAirDate',
+      genres: [],
+      id: 1,
+      inProduction: true,
+      languages: ['languages'],
+      lastAirDate: 'lastAirDate',
+      name: 'name',
+      numberOfEpisodes: 1,
+      numberOfSeasons: 1,
+      originCountry: ['originCountry'],
+      originalLanguage: 'originalLanguage',
+      originalName: 'originalName',
+      overview: 'overview',
+      popularity: 1,
+      posterPath: 'posterPath',
+      seasons: [],
+      status: 'status',
+      type: 'type',
+      voteAverage: 1,
+      voteCount: 1,
+      tagline: 'tagLine',
+    );
+
+    test(
+        'should return TV Series data when the call to remote data source is successful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTVSeriesDetail(tId))
+          .thenAnswer((_) async => tTVSeriesDetailModel);
+      // act
+      final result = await repository.getTVSeriesDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getTVSeriesDetail(tId));
+      expect(result, equals(Right(testTVSeriesDetail)));
+    });
+
+    test('should return a ServerFailure when the call is unsuccessful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTVSeriesDetail(tId))
+          .thenThrow(ServerException());
+
+      // act
+      final result = await repository.getTVSeriesDetail(tId);
+
+      // assert
+      verify(mockRemoteDataSource.getTVSeriesDetail(tId));
+      expect(result, equals(Left(ServerFailure(''))));
+    });
+
+    test(
+        'should return connection failure when the device is not connected to internet',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTVSeriesDetail(tId))
+          .thenThrow(SocketException('Failed to connect to the network'));
+      // act
+      final result = await repository.getTVSeriesDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getTVSeriesDetail(tId));
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });

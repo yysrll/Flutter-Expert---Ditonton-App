@@ -5,6 +5,7 @@ import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/presentation/core/pages/home_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/popular_tvseries_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/top_rated_tvseries_page.dart';
+import 'package:ditonton/presentation/tvseries/pages/tvseries_detail_page.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -134,7 +135,13 @@ class TVSeriesList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  TVSeriesDetailPage.ROUTE_NAME,
+                  arguments: tvseries.id,
+                );
+              },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(

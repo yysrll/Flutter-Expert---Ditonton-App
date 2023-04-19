@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ditonton/common/exception.dart';
+import 'package:ditonton/data/tvseries/models/tvseries_detail_model.dart';
 import 'package:ditonton/data/tvseries/models/tvseries_model.dart';
 import 'package:ditonton/data/tvseries/models/tvseries_response.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ abstract class TVSeriesRemoteDataSource {
   Future<List<TVSeriesModel>> getOnAirTVSeries();
   Future<List<TVSeriesModel>> getPopularTVSeries();
   Future<List<TVSeriesModel>> getTopRatedTVSeries();
+  Future<TVSeriesDetailModel> getTVSeriesDetail(int id);
 }
 
 class TVSeriesRemoteDataSourceImpl implements TVSeriesRemoteDataSource {
@@ -50,6 +52,17 @@ class TVSeriesRemoteDataSourceImpl implements TVSeriesRemoteDataSource {
 
     if (response.statusCode == 200) {
       return TVSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+    } else {
+      throw ServerException();
+    }
+  }
+  
+  @override
+  Future<TVSeriesDetailModel> getTVSeriesDetail(int id) async {
+    final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
+
+    if (response.statusCode == 200) {
+      return TVSeriesDetailModel.fromJson(json.decode(response.body));
     } else {
       throw ServerException();
     }

@@ -5,6 +5,7 @@ import 'package:ditonton/data/tvseries/datasources/tvseries_remote_data_source.d
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
 import 'package:ditonton/domain/tvseries/repositories/tvseries_repository.dart';
 
 class TVSeriesRepositoryImpl implements TVSeriesRepository {
@@ -25,7 +26,7 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-  
+
   @override
   Future<Either<Failure, List<TVSeries>>> getPopularTVSeries() async {
     try {
@@ -37,12 +38,24 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-  
+
   @override
   Future<Either<Failure, List<TVSeries>>> getTopRatedTVSeries() async {
     try {
       final result = await remoteDataSource.getTopRatedTVSeries();
       return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TVSeriesDetail>> getTVSeriesDetail(int id) async {
+    try {
+      final result = await remoteDataSource.getTVSeriesDetail(id);
+      return Right(result.toEntity());
     } on ServerException {
       return Left(ServerFailure(''));
     } on SocketException {

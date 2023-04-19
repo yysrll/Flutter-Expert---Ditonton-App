@@ -1,4 +1,5 @@
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
+import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
 
 final testTVSeries = TVSeries(
   posterPath: '/vC324sdfcS313vh9QXwijLIHPJp.jpg',
@@ -17,3 +18,29 @@ final testTVSeries = TVSeries(
 );
 
 final testTVSeriesList = [testTVSeries];
+
+final testTVSeriesDetail = TVSeriesDetail(
+  backdropPath: 'backdropPath',
+  episodeRunTime: [1, 2, 3],
+  firstAirDate: 'firstAirDate',
+  genres: [],
+  id: 1,
+  inProduction: true,
+  languages: ['languages'],
+  lastAirDate: 'lastAirDate',
+  name: 'name',
+  numberOfEpisodes: 1,
+  numberOfSeasons: 1,
+  originCountry: ['originCountry'],
+  originalLanguage: 'originalLanguage',
+  originalName: 'originalName',
+  overview: 'overview',
+  popularity: 1,
+  posterPath: 'posterPath',
+  seasons: [],
+  status: 'status',
+  type: 'type',
+  voteAverage: 1,
+  voteCount: 1,
+  tagline: 'tagLine',
+);
