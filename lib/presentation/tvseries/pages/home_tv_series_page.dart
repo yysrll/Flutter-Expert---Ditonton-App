@@ -34,6 +34,7 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
   Widget build(BuildContext context) {
     return HomePage(
       title: Text("Tv Series"),
+      isMovies: false,
       content: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(

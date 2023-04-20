@@ -3,16 +3,19 @@ import 'package:ditonton/presentation/movie/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/movie/pages/search_page.dart';
 import 'package:ditonton/presentation/movie/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/home_tv_series_page.dart';
+import 'package:ditonton/presentation/tvseries/pages/tvseries_search_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   final Widget title;
   final Widget content;
+  final bool isMovies;
 
   const HomePage({
     Key? key,
     required this.content,
     required this.title,
+    required this.isMovies,
   }) : super(key: key);
 
   @override
@@ -66,7 +69,11 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              if (isMovies) {
+                Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              } else {
+                Navigator.pushNamed(context, TVSeriesSearchPage.ROUTE_NAME);
+              }
             },
             icon: Icon(Icons.search),
           )
