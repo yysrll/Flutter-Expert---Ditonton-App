@@ -1,4 +1,4 @@
-import 'package:ditonton/data/movie/datasources/db/database_helper.dart';
+import 'package:ditonton/data/core/datasources/db/database_helper.dart';
 import 'package:ditonton/data/movie/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/movie/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/movie/repositories/movie_repository_impl.dart';

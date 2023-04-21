@@ -9,8 +9,7 @@ import 'dart:typed_data' as _i18;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ditonton/common/failure.dart' as _i7;
-import 'package:ditonton/data/movie/datasources/db/database_helper.dart'
-    as _i14;
+import 'package:ditonton/data/core/datasources/db/database_helper.dart' as _i14;
 import 'package:ditonton/data/movie/datasources/movie_local_data_source.dart'
     as _i12;
 import 'package:ditonton/data/movie/datasources/movie_remote_data_source.dart'

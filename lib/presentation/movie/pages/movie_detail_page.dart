@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/movie/entities/genre.dart';
+import 'package:ditonton/domain/core/entities/genre.dart';
 import 'package:ditonton/domain/movie/entities/movie.dart';
 import 'package:ditonton/domain/movie/entities/movie_detail.dart';
 import 'package:ditonton/presentation/movie/provider/movie_detail_notifier.dart';

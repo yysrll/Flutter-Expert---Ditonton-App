@@ -1,12 +1,12 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/movie/pages/about_page.dart';
+import 'package:ditonton/presentation/core/pages/about_page.dart';
 import 'package:ditonton/presentation/movie/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/movie/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/movie/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/movie/pages/search_page.dart';
 import 'package:ditonton/presentation/movie/pages/top_rated_movies_page.dart';
-import 'package:ditonton/presentation/movie/pages/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/core/pages/watchlist_page.dart';
 import 'package:ditonton/presentation/movie/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/movie_search_notifier.dart';
