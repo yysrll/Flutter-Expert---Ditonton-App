@@ -3,6 +3,7 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/presentation/core/pages/home_page.dart';
+import 'package:ditonton/presentation/tvseries/pages/on_air_tvseries_page%20copy.dart';
 import 'package:ditonton/presentation/tvseries/pages/popular_tvseries_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/top_rated_tvseries_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/tvseries_detail_page.dart';
@@ -41,9 +42,10 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'On Air',
-                style: kHeading6,
+              _buildSubHeading(
+                title: 'On Air',
+                onTap: () => Navigator.pushNamed(
+                    context, OnAirTVSeriesPage.ROUTE_NAME),
               ),
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.onAirState;
