@@ -1,3 +1,4 @@
+import 'package:ditonton/data/tvseries/models/tvseries_table.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
 
@@ -44,3 +45,24 @@ final testTVSeriesDetail = TVSeriesDetail(
   voteCount: 1,
   tagline: 'tagLine',
 );
+
+final testWatchlistTVSeries = TVSeries.watchlist(
+  id: 1,
+  name: 'name',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testTVSeriesTable = TVSeriesTable(
+  id: 1,
+  name: 'name',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testTVSeriesMap = {
+  'id': 1,
+  'overview': 'overview',
+  'posterPath': 'posterPath',
+  'name': 'name',
+};

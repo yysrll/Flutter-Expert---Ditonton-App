@@ -2,6 +2,7 @@ import 'package:ditonton/data/movie/datasources/db/database_helper.dart';
 import 'package:ditonton/data/movie/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/movie/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/movie/repositories/movie_repository_impl.dart';
+import 'package:ditonton/data/tvseries/datasources/tvseries_local_data_source.dart';
 import 'package:ditonton/data/tvseries/datasources/tvseries_remote_data_source.dart';
 import 'package:ditonton/data/tvseries/repositories/tvseries_repository_impl.dart';
 import 'package:ditonton/domain/movie/repositories/movie_repository.dart';
@@ -21,6 +22,10 @@ import 'package:ditonton/domain/tvseries/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_top_rated_tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_tvseries_detail.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_tvseries_recommendations.dart';
+import 'package:ditonton/domain/tvseries/usecases/get_tvseries_watchlist_status.dart';
+import 'package:ditonton/domain/tvseries/usecases/get_watchlist_tvseries.dart';
+import 'package:ditonton/domain/tvseries/usecases/remove_tvseries_watchlist.dart';
+import 'package:ditonton/domain/tvseries/usecases/save_tvseries_watchlist.dart';
 import 'package:ditonton/domain/tvseries/usecases/search_tvseries.dart';
 import 'package:ditonton/presentation/movie/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/movie/provider/movie_list_notifier.dart';
@@ -33,6 +38,7 @@ import 'package:ditonton/presentation/tvseries/provider/top_rated_tvseries_notif
 import 'package:ditonton/presentation/tvseries/provider/tvseries_detail_notifier.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_search_notifier.dart';
+import 'package:ditonton/presentation/tvseries/provider/watchlist_tvseries_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
@@ -99,11 +105,19 @@ void init() {
     () => TVSeriesDetailNotifier(
       getTVSeriesDetail: locator(),
       getTVSeriesRecommendations: locator(),
+      getWatchlistTVSeriesStatus: locator(),
+      saveTVSeriesWatchlist: locator(),
+      removeTVSeriesWatchlist: locator(),
     ),
   );
   locator.registerFactory(
     () => TVSeriesSearchNotifier(
       searchTVSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistTVSeriesNotifier(
+      getWatchlistTVSeries: locator(),
     ),
   );
 
@@ -126,6 +140,10 @@ void init() {
   locator.registerLazySingleton(() => GetTVSeriesDetail(locator()));
   locator.registerLazySingleton(() => GetTVSeriesRecommendations(locator()));
   locator.registerLazySingleton(() => SearchTVSeries(locator()));
+  locator.registerLazySingleton(() => GetWatchlistTVSeriesStatus(locator()));
+  locator.registerLazySingleton(() => SaveTVSeriesWatchlist(locator()));
+  locator.registerLazySingleton(() => RemoveTVSeriesWatchlist(locator()));
+  locator.registerLazySingleton(() => GetWatchlistTVSeries(locator()));
 
   // Movies Repository
   locator.registerLazySingleton<MovieRepository>(
@@ -137,7 +155,11 @@ void init() {
 
   // TV Series Repository
   locator.registerLazySingleton<TVSeriesRepository>(
-      () => TVSeriesRepositoryImpl(remoteDataSource: locator()));
+    () => TVSeriesRepositoryImpl(
+      remoteDataSource: locator(),
+      localDataSource: locator(),
+    ),
+  );
 
   // Movie Data Sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
@@ -148,8 +170,10 @@ void init() {
   // TV Series Data Sources
   locator.registerLazySingleton<TVSeriesRemoteDataSource>(
       () => TVSeriesRemoteDataSourceImpl(client: locator()));
+  locator.registerLazySingleton<TVSeriesLocalDataSource>(
+      () => TVSeriesLocalDataSourceImpl(databaseHelper: locator()));
 
-  // helper
+  // Helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external

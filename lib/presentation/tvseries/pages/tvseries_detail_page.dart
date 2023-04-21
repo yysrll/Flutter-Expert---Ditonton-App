@@ -29,6 +29,8 @@ class _TVSeriesDetailPageState extends State<TVSeriesDetailPage> {
     Future.microtask(() {
       Provider.of<TVSeriesDetailNotifier>(context, listen: false)
           .fetchTVSeriesDetail(widget.id);
+      Provider.of<TVSeriesDetailNotifier>(context, listen: false)
+          .loadWatchlistStatus(widget.id);
     });
   }
 
@@ -47,7 +49,7 @@ class _TVSeriesDetailPageState extends State<TVSeriesDetailPage> {
               child: TVSeriesDetailContent(
                 tvSeries: tvSeries,
                 recommendations: provider.tvSeriesRecommendations,
-                isAddedWatchlist: false,
+                isAddedWatchlist: provider.isAddedToWatchlist,
               ),
             );
           } else {
@@ -111,7 +113,42 @@ class TVSeriesDetailContent extends StatelessWidget {
                               style: kHeading5,
                             ),
                             ElevatedButton(
-                              onPressed: () async {},
+                              onPressed: () async {
+                                if (!isAddedWatchlist) {
+                                  await Provider.of<TVSeriesDetailNotifier>(
+                                          context,
+                                          listen: false)
+                                      .addWatchlist(tvSeries);
+                                } else {
+                                  await Provider.of<TVSeriesDetailNotifier>(
+                                          context,
+                                          listen: false)
+                                      .removeWatchlist(tvSeries);
+                                }
+
+                                final message =
+                                    Provider.of<TVSeriesDetailNotifier>(context,
+                                            listen: false)
+                                        .watchlistMessage;
+
+                                if (message ==
+                                        TVSeriesDetailNotifier
+                                            .watchlistAddSuccessMessage ||
+                                    message ==
+                                        TVSeriesDetailNotifier
+                                            .watchlistRemoveSuccessMessage) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(message)));
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text(message),
+                                        );
+                                      });
+                                }
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [

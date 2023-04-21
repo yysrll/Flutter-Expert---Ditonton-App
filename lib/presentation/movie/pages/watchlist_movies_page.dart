@@ -2,6 +2,8 @@ import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/movie/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/movie/widgets/movie_card_list.dart';
+import 'package:ditonton/presentation/tvseries/provider/watchlist_tvseries_notifier.dart';
+import 'package:ditonton/presentation/tvseries/widgets/tvseries_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +19,12 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+    Future.microtask(() {
+      Provider.of<WatchlistMovieNotifier>(context, listen: false)
+          .fetchWatchlistMovies();
+      Provider.of<WatchlistTVSeriesNotifier>(context, listen: false)
+          .fetchWatchlistTVSeries();
+    });
   }
 
   @override
@@ -31,38 +36,94 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   void didPopNext() {
     Provider.of<WatchlistMovieNotifier>(context, listen: false)
         .fetchWatchlistMovies();
+    Provider.of<WatchlistTVSeriesNotifier>(context, listen: false)
+          .fetchWatchlistTVSeries();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Watchlist'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistMovieNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (data.watchlistState == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.watchlistMovies[index];
-                  return MovieCard(movie);
-                },
-                itemCount: data.watchlistMovies.length,
-              );
-            } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.movie),
+                text: 'Movies',
+              ),
+              Tab(
+                icon: Icon(Icons.tv),
+                text: 'TV Series',
+              ),
+            ],
+          ),
+          title: Text('Watchlist'),
         ),
+        body: TabBarView(
+          children: [
+            _movieWatchlist(),
+            _tvseriesWatchlist(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _movieWatchlist() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Consumer<WatchlistMovieNotifier>(
+        builder: (context, data, child) {
+          if (data.watchlistState == RequestState.Loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (data.watchlistState == RequestState.Loaded) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                final movie = data.watchlistMovies[index];
+                return MovieCard(movie);
+              },
+              itemCount: data.watchlistMovies.length,
+            );
+          } else {
+            return Center(
+              key: Key('error_message'),
+              child: Text(data.message),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _tvseriesWatchlist() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Consumer<WatchlistTVSeriesNotifier>(
+        builder: (context, data, child) {
+          if (data.state == RequestState.Loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (data.state == RequestState.Loaded) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                final tvseries = data.watchlistTVSeries[index];
+                return TVSeriesCard(
+                  tvSeries: tvseries,
+                );
+              },
+              itemCount: data.watchlistTVSeries.length,
+            );
+          } else {
+            return Center(
+              key: Key('error_message'),
+              child: Text(data.message),
+            );
+          }
+        },
       ),
     );
   }
