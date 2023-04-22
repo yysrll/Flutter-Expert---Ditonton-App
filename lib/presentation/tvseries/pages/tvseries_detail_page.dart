@@ -280,8 +280,9 @@ class TVSeriesDetailContent extends StatelessWidget {
                                                 Radius.circular(8),
                                               ),
                                               child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${tvseries.posterPath}',
+                                                imageUrl: tvseries.posterPath != null
+                                                    ? 'https://image.tmdb.org/t/p/w500${tvseries.posterPath}'
+                                                    : 'https://i.ibb.co/TWLKGMY/No-Image-Available.jpg',
                                                 placeholder: (context, url) =>
                                                     Center(
                                                   child:
