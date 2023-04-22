@@ -2,7 +2,7 @@ import 'package:ditonton/domain/tvseries/entities/season.dart';
 import 'package:equatable/equatable.dart';
 
 class SeasonModel extends Equatable {
-  final String airDate;
+  final String? airDate;
   final int episodeCount;
   final int id;
   final String name;
