@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/data/tvseries/models/tvseries_model.dart';
 import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/search_tvseries.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_search_notifier.dart';
