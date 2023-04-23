@@ -1,5 +1,5 @@
 # CI/CD by Codemagic
-[![Codemagic build status](https://api.codemagic.io/apps/64451a28e0b18dbe5d013ff2/64451cc16a7a09e433f87b89/status_badge.svg)](https://codemagic.io/apps/64451a28e0b18dbe5d013ff2/64451cc16a7a09e433f87b89/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/64451a28e0b18dbe5d013ff2/64451a28e0b18dbe5d013ff1/status_badge.svg)](https://codemagic.io/apps/64451a28e0b18dbe5d013ff2/64451a28e0b18dbe5d013ff1/latest_build)
 
 # a199-flutter-expert-project
 
