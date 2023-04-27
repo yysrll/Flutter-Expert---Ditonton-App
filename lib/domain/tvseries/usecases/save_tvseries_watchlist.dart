@@ -1,7 +1,7 @@
+import 'package:core/core.dart';
+import 'package:core/domain/entities/tvseries_detail.dart';
+import 'package:core/domain/repositories/tvseries_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
-import 'package:ditonton/domain/tvseries/repositories/tvseries_repository.dart';
 
 class SaveTVSeriesWatchlist {
   final TVSeriesRepository repository;

@@ -1,5 +1,5 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/movie/entities/movie.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/movie.dart';
 import 'package:ditonton/presentation/movie/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/movie/provider/top_rated_movies_notifier.dart';
 import 'package:flutter/material.dart';

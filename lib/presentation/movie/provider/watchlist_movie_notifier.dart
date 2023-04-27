@@ -1,5 +1,5 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/movie/entities/movie.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/movie.dart';
 import 'package:ditonton/domain/movie/usecases/get_watchlist_movies.dart';
 import 'package:flutter/foundation.dart';
 

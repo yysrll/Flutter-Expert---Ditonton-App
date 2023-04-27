@@ -1,12 +1,11 @@
 import 'dart:io';
 
+import 'package:core/core.dart';
+import 'package:core/data/models/tvseries_detail_model.dart';
+import 'package:core/data/models/tvseries_model.dart';
+import 'package:core/data/repositories/tvseries_repository_impl.dart';
+import 'package:core/domain/entities/tvseries.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/data/tvseries/models/tvseries_detail_model.dart';
-import 'package:ditonton/data/tvseries/models/tvseries_model.dart';
-import 'package:ditonton/data/tvseries/repositories/tvseries_repository_impl.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

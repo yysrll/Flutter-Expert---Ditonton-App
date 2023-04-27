@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/movie/entities/movie.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/movie.dart';
 import 'package:ditonton/presentation/core/pages/home_page.dart';
 import 'package:ditonton/presentation/movie/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/movie/pages/now_playing_movies_page.dart';
 import 'package:ditonton/presentation/movie/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/movie/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/movie/provider/movie_list_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +52,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 } else if (state == RequestState.Loaded) {
                   return MovieList(data.nowPlayingMovies);
                 } else {
-                  return Text('Failed');
+                  return Text('Failed ${data.message}');
                 }
               }),
               _buildSubHeading(

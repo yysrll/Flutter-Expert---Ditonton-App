@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/tvseries.dart';
 import 'package:ditonton/presentation/core/pages/home_page.dart';
 import 'package:ditonton/presentation/tvseries/pages/on_air_tvseries_page%20copy.dart';
 import 'package:ditonton/presentation/tvseries/pages/popular_tvseries_page.dart';

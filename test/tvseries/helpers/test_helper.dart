@@ -1,6 +1,6 @@
-import 'package:ditonton/data/tvseries/datasources/tvseries_local_data_source.dart';
-import 'package:ditonton/data/tvseries/datasources/tvseries_remote_data_source.dart';
-import 'package:ditonton/domain/tvseries/repositories/tvseries_repository.dart';
+import 'package:core/data/datasources/tvseries_local_data_source.dart';
+import 'package:core/data/datasources/tvseries_remote_data_source.dart';
+import 'package:core/domain/repositories/tvseries_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 

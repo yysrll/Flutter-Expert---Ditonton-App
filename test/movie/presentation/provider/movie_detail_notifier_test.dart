@@ -1,13 +1,12 @@
+import 'package:core/core.dart';
+import 'package:core/domain/entities/movie.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/movie/entities/movie.dart';
 import 'package:ditonton/domain/movie/usecases/get_movie_detail.dart';
 import 'package:ditonton/domain/movie/usecases/get_movie_recommendations.dart';
-import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/movie/usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/movie/usecases/remove_watchlist.dart';
 import 'package:ditonton/domain/movie/usecases/save_watchlist.dart';
 import 'package:ditonton/presentation/movie/provider/movie_detail_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

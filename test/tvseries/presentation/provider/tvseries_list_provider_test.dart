@@ -1,7 +1,6 @@
+import 'package:core/core.dart';
+import 'package:core/domain/entities/tvseries.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_on_air_tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_top_rated_tvseries.dart';

@@ -1,5 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/common/utils.dart';
+import 'package:core/core.dart';
 import 'package:ditonton/presentation/movie/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/movie/widgets/movie_card_list.dart';
 import 'package:ditonton/presentation/tvseries/provider/watchlist_tvseries_notifier.dart';

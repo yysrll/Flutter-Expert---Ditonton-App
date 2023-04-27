@@ -1,6 +1,5 @@
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/tvseries/usecases/get_watchlist_tvseries.dart';
 import 'package:ditonton/presentation/tvseries/provider/watchlist_tvseries_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';

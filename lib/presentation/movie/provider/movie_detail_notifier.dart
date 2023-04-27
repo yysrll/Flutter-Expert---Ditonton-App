@@ -1,8 +1,8 @@
-import 'package:ditonton/domain/movie/entities/movie.dart';
-import 'package:ditonton/domain/movie/entities/movie_detail.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/movie.dart';
+import 'package:core/domain/entities/movie_detail.dart';
 import 'package:ditonton/domain/movie/usecases/get_movie_detail.dart';
 import 'package:ditonton/domain/movie/usecases/get_movie_recommendations.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/movie/usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/movie/usecases/remove_watchlist.dart';
 import 'package:ditonton/domain/movie/usecases/save_watchlist.dart';

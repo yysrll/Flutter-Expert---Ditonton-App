@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/core/entities/genre.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
+import 'package:core/core.dart';
+import 'package:core/domain/entities/genre.dart';
+import 'package:core/domain/entities/tvseries.dart';
+import 'package:core/domain/entities/tvseries_detail.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_detail_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

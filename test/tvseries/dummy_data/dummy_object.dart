@@ -1,6 +1,7 @@
-import 'package:ditonton/data/tvseries/models/tvseries_table.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries_detail.dart';
+
+import 'package:core/data/models/tvseries_table.dart';
+import 'package:core/domain/entities/tvseries.dart';
+import 'package:core/domain/entities/tvseries_detail.dart';
 
 final testTVSeries = TVSeries(
   posterPath: '/vC324sdfcS313vh9QXwijLIHPJp.jpg',

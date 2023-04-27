@@ -39,6 +39,8 @@ dependencies:
 
   about:
     path: about
+  core:
+    path: core
 
 dev_dependencies:
   build_runner: ^2.0.4

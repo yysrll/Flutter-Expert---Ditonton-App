@@ -1,7 +1,7 @@
+import 'package:core/core.dart';
+import 'package:core/domain/entities/tvseries.dart';
+import 'package:core/domain/repositories/tvseries_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/tvseries/entities/tvseries.dart';
-import 'package:ditonton/domain/tvseries/repositories/tvseries_repository.dart';
 
 class GetTopRatedTVSeries {
   final TVSeriesRepository repository;

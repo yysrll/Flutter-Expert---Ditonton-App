@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/data/tvseries/datasources/tvseries_remote_data_source.dart';
-import 'package:ditonton/data/tvseries/models/tvseries_detail_model.dart';
-import 'package:ditonton/data/tvseries/models/tvseries_response.dart';
+import 'package:core/core.dart';
+import 'package:core/data/datasources/tvseries_remote_data_source.dart';
+import 'package:core/data/models/tvseries_detail_model.dart';
+import 'package:core/data/models/tvseries_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../../helpers/test_helper.mocks.dart';
+import '../../../movie/helpers/test_helper.mocks.dart';
 import '../../json_reader.dart';
 
 void main() {

@@ -1,5 +1,4 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
+import 'package:core/core.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_search_notifier.dart';
 import 'package:ditonton/presentation/tvseries/widgets/tvseries_card_list.dart';
 import 'package:flutter/material.dart';
