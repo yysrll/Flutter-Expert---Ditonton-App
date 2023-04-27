@@ -20,6 +20,7 @@ class _TopRatedTVSeriesPageState extends State<TopRatedTVSeriesPage> {
         Provider.of<TopRatedTVSeriesNotifier>(context, listen: false)
             .fetchTopRatedTVSeries());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

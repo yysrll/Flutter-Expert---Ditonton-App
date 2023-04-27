@@ -13,7 +13,7 @@ class TopRatedTVSeriesNotifier extends ChangeNotifier {
 
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;
-  
+
   String _message = '';
   String get message => _message;
 

@@ -37,7 +37,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
     Provider.of<WatchlistMovieNotifier>(context, listen: false)
         .fetchWatchlistMovies();
     Provider.of<WatchlistTVSeriesNotifier>(context, listen: false)
-          .fetchWatchlistTVSeries();
+        .fetchWatchlistTVSeries();
   }
 
   @override

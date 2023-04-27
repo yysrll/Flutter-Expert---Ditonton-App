@@ -20,6 +20,7 @@ class _OnAirTVSeriesPageState extends State<OnAirTVSeriesPage> {
         Provider.of<OnAirTVSeriesNotifier>(context, listen: false)
             .fetchOnAirTVSeries());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

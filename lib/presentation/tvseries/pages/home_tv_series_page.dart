@@ -44,8 +44,8 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
             children: [
               _buildSubHeading(
                 title: 'On Air',
-                onTap: () => Navigator.pushNamed(
-                    context, OnAirTVSeriesPage.ROUTE_NAME),
+                onTap: () =>
+                    Navigator.pushNamed(context, OnAirTVSeriesPage.ROUTE_NAME),
               ),
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.onAirState;

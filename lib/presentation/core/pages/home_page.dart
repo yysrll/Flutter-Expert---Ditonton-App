@@ -1,4 +1,4 @@
-import 'package:ditonton/presentation/core/pages/about_page.dart';
+import 'package:about/about_page.dart';
 import 'package:ditonton/presentation/movie/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/movie/pages/search_page.dart';
 import 'package:ditonton/presentation/core/pages/watchlist_page.dart';

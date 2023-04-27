@@ -1,8 +1,8 @@
+import 'package:about/about_page.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/http_ssl_pinning.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/firebase_options.dart';
-import 'package:ditonton/presentation/core/pages/about_page.dart';
 import 'package:ditonton/presentation/movie/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/movie/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/movie/pages/now_playing_movies_page.dart';

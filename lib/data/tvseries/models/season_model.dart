@@ -33,14 +33,14 @@ class SeasonModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-    'air_date': airDate,
-    'episode_count': episodeCount,
-    'id': id,
-    'name': name,
-    'overview': overview,
-    'poster_path': posterPath,
-    'season_number': seasonNumber,
-  };
+        'air_date': airDate,
+        'episode_count': episodeCount,
+        'id': id,
+        'name': name,
+        'overview': overview,
+        'poster_path': posterPath,
+        'season_number': seasonNumber,
+      };
 
   Season toEntity() {
     return Season(
@@ -56,12 +56,12 @@ class SeasonModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    airDate,
-    episodeCount,
-    id,
-    name,
-    overview,
-    posterPath,
-    seasonNumber,
-  ];
+        airDate,
+        episodeCount,
+        id,
+        name,
+        overview,
+        posterPath,
+        seasonNumber,
+      ];
 }

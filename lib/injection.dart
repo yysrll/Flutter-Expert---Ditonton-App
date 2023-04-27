@@ -42,7 +42,6 @@ import 'package:ditonton/presentation/tvseries/provider/tvseries_detail_notifier
 import 'package:ditonton/presentation/tvseries/provider/tvseries_list_notifier.dart';
 import 'package:ditonton/presentation/tvseries/provider/tvseries_search_notifier.dart';
 import 'package:ditonton/presentation/tvseries/provider/watchlist_tvseries_notifier.dart';
-import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
