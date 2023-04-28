@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
-import 'package:movies/presentation/provider/movie_search_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/presentation/blocs/search/search_movies_bloc.dart';
 import 'package:movies/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchPage extends StatelessWidget {
   // ignore: constant_identifier_names
@@ -22,9 +22,8 @@ class SearchPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+              onChanged: (query) {
+                context.read<SearchMoviesBloc>().add(OnQueryChange(query));
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -38,31 +37,36 @@ class SearchPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<MovieSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (data.state == RequestState.Loaded) {
-                  final result = data.searchResult;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Container(),
-                  );
-                }
-              },
-            ),
+            BlocBuilder<SearchMoviesBloc, SearchMoviesState>(
+                builder: (context, state) {
+              if (state is SearchLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is SearchLoaded) {
+                final result = state.movies;
+                return Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (context, index) {
+                      final movie = result[index];
+                      return MovieCard(movie);
+                    },
+                    itemCount: result.length,
+                  ),
+                );
+              } else if (state is SearchError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: Container(),
+                );
+              }
+            }),
           ],
         ),
       ),
