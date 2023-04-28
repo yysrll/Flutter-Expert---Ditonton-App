@@ -1,6 +1,7 @@
 name: core
 description: A new Flutter package project.
 version: 0.0.1
+publish_to: none
 homepage:
 
 environment:
@@ -10,9 +11,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  movies:
+    path: ../movies
+  tvseries:
+    path: ../tvseries
+  about:
+    path: ../about
   equatable: ^2.0.2
   http: ^0.13.3
   google_fonts: ^4.0.3
+  provider: ^6.0.5
   sqflite: ^2.2.7
   dartz: ^0.10.1
 
