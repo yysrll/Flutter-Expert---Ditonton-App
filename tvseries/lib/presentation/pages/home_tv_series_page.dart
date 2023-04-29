@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:core/domain/entities/tvseries.dart';
 import 'package:core/presentation/pages/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
 import 'package:tvseries/presentation/pages/on_air_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/popular_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/top_rated_tvseries_page.dart';
@@ -24,11 +26,12 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<TVSeriesListNotifier>(context, listen: false)
-          ..fetchOnAirTVSeries()
-          ..fetchPopularTVSeries()
-          ..fetchTopRatedTVSeries());
+    Future.microtask(() {
+      context.read<OnAirTVSeriesBloc>().add(const FetchOnAirTVSeries());
+      Provider.of<TVSeriesListNotifier>(context, listen: false)
+        ..fetchPopularTVSeries()
+        ..fetchTopRatedTVSeries();
+    });
   }
 
   @override
@@ -47,16 +50,20 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, OnAirTVSeriesPage.ROUTE_NAME),
               ),
-              Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.onAirState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<OnAirTVSeriesBloc, OnAirTVSeriesState>(
+                  builder: (context, state) {
+                if (state is OnAirTVSeriesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TVSeriesList(data.onAirTVSeries);
-                } else {
+                } else if (state is OnAirTVSeriesLoaded) {
+                  return TVSeriesList(state.tvSeries);
+                } else if (state is OnAirTVSeriesError) {
                   return const Text('Failed');
+                } else if (state is OnAirTVSeriesEmpty) {
+                  return const Text('Tidak ada data');
+                } else {
+                  return Container();
                 }
               }),
               _buildSubHeading(
