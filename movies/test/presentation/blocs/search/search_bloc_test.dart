@@ -8,7 +8,7 @@ import 'package:movies/domain/usecases/search_movies.dart';
 import 'package:movies/presentation/blocs/search/search_movies_bloc.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
-import 'search_movies_bloc_test.mocks.dart';
+import 'search_bloc_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {
