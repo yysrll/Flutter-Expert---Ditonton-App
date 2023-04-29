@@ -29,8 +29,8 @@ import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
 import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
 import 'package:tvseries/presentation/blocs/search/search_tvseries_bloc.dart';
 import 'package:tvseries/presentation/blocs/top_rated/top_rated_tvseries_bloc.dart';
+import 'package:tvseries/presentation/blocs/watchlist/watchlist_tvseries_bloc.dart';
 import 'package:tvseries/presentation/provider/tvseries_detail_notifier.dart';
-import 'package:tvseries/presentation/provider/watchlist_tvseries_notifier.dart';
 import 'package:tvseries/domain/usecases/get_on_air_tvseries.dart';
 import 'package:tvseries/domain/usecases/get_popular_tvseries.dart';
 import 'package:tvseries/domain/usecases/get_top_rated_tvseries.dart';
@@ -105,8 +105,8 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => WatchlistTVSeriesNotifier(
-      getWatchlistTVSeries: locator(),
+    () => WatchlistTVSeriesBloc(
+      locator(),
     ),
   );
   locator.registerFactory(() => OnAirTVSeriesBloc(
