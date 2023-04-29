@@ -1,8 +1,7 @@
-import 'package:core/core.dart';
-import 'package:movies/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/presentation/blocs/top_rated/top_rated_movies_bloc.dart';
 import 'package:movies/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -20,8 +19,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<TopRatedMoviesNotifier>(context, listen: false)
-            .fetchTopRatedMovies());
+        context.read<TopRatedMoviesBloc>().add(const FetchTopRatedMovies()));
   }
 
   @override
@@ -32,24 +30,33 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+          builder: (context, state) {
+            if (state is TopRatedMoviesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is TopRatedMoviesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.movies[index];
+                  final movie = state.movies[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.movies.length,
+                itemCount: state.movies.length,
+              );
+            } else if (state is TopRatedMoviesError) {
+              return Center(
+                key: const Key('error_message'),
+                child: Text(state.message),
+              );
+            } else if (state is TopRatedMovieEmpty) {
+              return const Center(
+                key: Key('empty_message'),
+                child: Text('Tidak ada data'),
               );
             } else {
               return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+                child: Container(),
               );
             }
           },

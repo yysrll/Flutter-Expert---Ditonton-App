@@ -22,9 +22,8 @@ import 'package:movies/domain/usecases/search_movies.dart';
 import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.dart';
 import 'package:movies/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:movies/presentation/blocs/search/search_movies_bloc.dart';
+import 'package:movies/presentation/blocs/top_rated/top_rated_movies_bloc.dart';
 import 'package:movies/presentation/provider/movie_detail_notifier.dart';
-import 'package:movies/presentation/provider/movie_list_notifier.dart';
-import 'package:movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:movies/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:tvseries/presentation/provider/on_air_tvseries_notifier.dart';
 import 'package:tvseries/presentation/provider/popular_tvseries_notifier.dart';
@@ -49,13 +48,6 @@ final locator = GetIt.instance;
 void init() {
   // Movie Provider
   locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
     () => MovieDetailNotifier(
       getMovieDetail: locator(),
       getMovieRecommendations: locator(),
@@ -75,8 +67,8 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
+    () => TopRatedMoviesBloc(
+      locator(),
     ),
   );
   locator.registerFactory(

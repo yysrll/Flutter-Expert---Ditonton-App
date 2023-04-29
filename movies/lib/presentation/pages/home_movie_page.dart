@@ -6,12 +6,11 @@ import 'package:core/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.dart';
 import 'package:movies/presentation/blocs/popular/popular_movies_bloc.dart';
+import 'package:movies/presentation/blocs/top_rated/top_rated_movies_bloc.dart';
 import 'package:movies/presentation/pages/movie_detail_page.dart';
 import 'package:movies/presentation/pages/now_playing_movies_page.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
 import 'package:movies/presentation/pages/top_rated_movies_page.dart';
-import 'package:movies/presentation/provider/movie_list_notifier.dart';
-import 'package:provider/provider.dart';
 
 class HomeMoviePage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -30,8 +29,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
     Future.microtask(() {
       context.read<NowPlayingMoviesBloc>().add(const FetchNowPlayingMovies());
       context.read<PopularMoviesBloc>().add(const FetchPopularMovies());
-      Provider.of<MovieListNotifier>(context, listen: false)
-          .fetchTopRatedMovies();
+      context.read<TopRatedMoviesBloc>().add(const FetchTopRatedMovies());
     });
   }
 
@@ -94,16 +92,20 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+                  builder: (context, state) {
+                if (state is TopRatedMoviesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.topRatedMovies);
-                } else {
+                } else if (state is TopRatedMoviesLoaded) {
+                  return MovieList(state.movies);
+                } else if (state is TopRatedMoviesError) {
                   return const Text('Failed');
+                } else if (state is TopRatedMovieEmpty) {
+                  return const Text('Tidak ada data');
+                } else {
+                  return Container();
                 }
               }),
             ],
