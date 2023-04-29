@@ -53,7 +53,8 @@ void main() {
     expect(listenerCallCount, 1);
   });
 
-  test('should change tv series data when data is gotten successfully', () async {
+  test('should change tv series data when data is gotten successfully',
+      () async {
     // arrange
     when(mockGetOnAirTVSeries.execute())
         .thenAnswer((_) async => Right(tTVSeriesList));

@@ -14,7 +14,7 @@ void main() {
     repository = MockTVSeriesRepository();
     usecase = SaveTVSeriesWatchlist(repository);
   });
-  
+
   test('should save tv series to the repository', () async {
     // arrange
     when(repository.saveWatchlist(testTVSeriesDetail))

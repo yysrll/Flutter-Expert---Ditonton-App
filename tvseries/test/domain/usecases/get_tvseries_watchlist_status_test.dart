@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 
-
 void main() {
   late GetWatchlistTVSeriesStatus usecase;
   late MockTVSeriesRepository repository;
@@ -16,8 +15,7 @@ void main() {
 
   test('should get tv series watchlist status from the repository', () async {
     // arrange
-    when(repository.isAddedToWatchlist(1))
-        .thenAnswer((_) async => true);
+    when(repository.isAddedToWatchlist(1)).thenAnswer((_) async => true);
     // act
     final result = await usecase.execute(1);
     // assert

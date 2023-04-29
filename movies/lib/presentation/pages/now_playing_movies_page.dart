@@ -1,8 +1,7 @@
-import 'package:core/core.dart';
-import '../provider/now_playing_movies_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.dart';
 import '../widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class NowPlayingMoviesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -19,9 +18,9 @@ class _NowPlayingMoviesPageState extends State<NowPlayingMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<NowPlayingMoviesNotifier>(context, listen: false)
-            .fetchNowPlayingMovies());
+    Future.microtask(() => context
+        .read<NowPlayingMoviesBloc>()
+        .add(const FetchNowPlayingMovies()));
   }
 
   @override
@@ -32,28 +31,35 @@ class _NowPlayingMoviesPageState extends State<NowPlayingMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<NowPlayingMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (data.state == RequestState.Loaded) {
-              return ListView.builder(
+        child: BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
+            builder: (context, state) {
+          if (state is NowPlayingMoviesLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is NowPlayingMoviesLoaded) {
+            final result = state.movies;
+            return Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
                 itemBuilder: (context, index) {
-                  final movie = data.movies[index];
+                  final movie = result[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.movies.length,
-              );
-            } else {
-              return Center(
+                itemCount: result.length,
+              ),
+            );
+          } else if (state is NowPlayingMoviesError) {
+            return Expanded(
+              child: Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
-        ),
+                child: Text(state.message),
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        }),
       ),
     );
   }

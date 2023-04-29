@@ -6,7 +6,6 @@ import 'package:tvseries/domain/usecases/get_popular_tvseries.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 
-
 void main() {
   late GetPopularTVSeries usecase;
   late MockTVSeriesRepository mockRepository;

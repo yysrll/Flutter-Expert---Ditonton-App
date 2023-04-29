@@ -53,7 +53,8 @@ void main() {
     expect(listenerCallCount, 1);
   });
 
-  test('should change tv series data when data is gotten successfully', () async {
+  test('should change tv series data when data is gotten successfully',
+      () async {
     // arrange
     when(mockGetPopularTVSeries.execute())
         .thenAnswer((_) async => Right(tTVSeriesList));
@@ -64,8 +65,9 @@ void main() {
     expect(notifier.popularState, equals(RequestState.Loaded));
     expect(listenerCallCount, 2);
   });
-  
-  test('should change state to error when data is gotten unsuccessfully', () async {
+
+  test('should change state to error when data is gotten unsuccessfully',
+      () async {
     // arrange
     when(mockGetPopularTVSeries.execute())
         .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));

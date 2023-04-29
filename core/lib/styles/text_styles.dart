@@ -18,4 +18,3 @@ final kTextTheme = TextTheme(
   titleMedium: kSubtitle,
   bodyMedium: kBodyText,
 );
-

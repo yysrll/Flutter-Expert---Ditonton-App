@@ -9,7 +9,7 @@ import '../../helpers/test_helper.mocks.dart';
 void main() {
   late RemoveTVSeriesWatchlist usecase;
   late MockTVSeriesRepository repository;
-  
+
   setUp(() {
     repository = MockTVSeriesRepository();
     usecase = RemoveTVSeriesWatchlist(repository);

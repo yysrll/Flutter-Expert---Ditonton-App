@@ -249,8 +249,8 @@ void main() {
     group('on Error', () {
       test('should return error when data is unsuccessful', () async {
         // arrange
-        when(mockGetTVSeriesDetail.execute(tId))
-            .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
+        when(mockGetTVSeriesDetail.execute(tId)).thenAnswer(
+            (_) async => const Left(ServerFailure('Server Failure')));
         when(mockGetTVSeriesRecommendations.execute(tId))
             .thenAnswer((_) async => Right(tTVSeriesList));
         // act

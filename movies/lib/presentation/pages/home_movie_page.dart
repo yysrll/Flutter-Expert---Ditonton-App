@@ -3,6 +3,8 @@ import 'package:core/core.dart';
 import 'package:core/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:core/presentation/pages/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.dart';
 import 'package:movies/presentation/pages/movie_detail_page.dart';
 import 'package:movies/presentation/pages/now_playing_movies_page.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
@@ -24,11 +26,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    Future.microtask(() {
+      context.read<NowPlayingMoviesBloc>().add(const FetchNowPlayingMovies());
+      Provider.of<MovieListNotifier>(context, listen: false)
+        ..fetchPopularMovies()
+        ..fetchTopRatedMovies();
+    });
   }
 
   @override
@@ -47,16 +50,21 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 onTap: () => Navigator.pushNamed(
                     context, NowPlayingMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
+                  builder: (context, state) {
+                if (state is NowPlayingMoviesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.nowPlayingMovies);
+                } else if (state is NowPlayingMoviesLoaded) {
+                  final result = state.movies;
+                  return MovieList(result);
+                } else if (state is NowPlayingMoviesError) {
+                  return Text(state.message);
+                } else if (state is NowPlayingMoviesEmpty) {
+                  return const Text('Tidak ada data');
                 } else {
-                  return Text('Failed ${data.message}');
+                  return Container();
                 }
               }),
               _buildSubHeading(

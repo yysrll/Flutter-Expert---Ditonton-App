@@ -6,7 +6,6 @@ import 'package:tvseries/domain/usecases/get_on_air_tvseries.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 
-
 void main() {
   late GetOnAirTVSeries usecase;
   late MockTVSeriesRepository mockRepository;

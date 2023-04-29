@@ -60,8 +60,7 @@ void main() {
       verify(mockSearchTVSeries.execute(tQuery));
     });
 
-    test('should emit Loading when data is gotten successfully',
-        () async {
+    test('should emit Loading when data is gotten successfully', () async {
       // arrange
       when(mockSearchTVSeries.execute(tQuery))
           .thenAnswer((_) async => Right(tTVSeriesList));
@@ -71,7 +70,8 @@ void main() {
       expect(notifier.state, equals(RequestState.Loading));
     });
 
-    test('should emit Loaded adn change data when is gotten successfully', () async {
+    test('should emit Loaded adn change data when is gotten successfully',
+        () async {
       // arrange
       when(mockSearchTVSeries.execute(tQuery))
           .thenAnswer((_) async => Right(tTVSeriesList));
