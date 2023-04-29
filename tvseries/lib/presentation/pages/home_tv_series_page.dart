@@ -4,6 +4,7 @@ import 'package:core/domain/entities/tvseries.dart';
 import 'package:core/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
+import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
 import 'package:tvseries/presentation/pages/on_air_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/popular_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/top_rated_tvseries_page.dart';
@@ -28,9 +29,9 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     super.initState();
     Future.microtask(() {
       context.read<OnAirTVSeriesBloc>().add(const FetchOnAirTVSeries());
+      context.read<PopularTVSeriesBloc>().add(const FetchPopularTVSeries());
       Provider.of<TVSeriesListNotifier>(context, listen: false)
-        ..fetchPopularTVSeries()
-        ..fetchTopRatedTVSeries();
+          .fetchTopRatedTVSeries();
     });
   }
 
@@ -71,16 +72,20 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                 onTap: () => Navigator.pushNamed(
                     context, PopularTVSeriesPage.ROUTE_NAME),
               ),
-              Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.popularState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<PopularTVSeriesBloc, PopularTVSeriesState>(
+                  builder: (context, state) {
+                if (state is PopularTVSeriesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TVSeriesList(data.popularTVSeries);
-                } else {
+                } else if (state is PopularTVSeriesLoaded) {
+                  return TVSeriesList(state.tvSeries);
+                } else if (state is PopularTVSeriesError) {
                   return const Text('Failed');
+                } else if (state is PopularTVSeriesEmpty) {
+                  return const Text('Tidak ada data');
+                } else {
+                  return Container();
                 }
               }),
               _buildSubHeading(

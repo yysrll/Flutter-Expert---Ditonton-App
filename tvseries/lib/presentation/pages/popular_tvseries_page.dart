@@ -1,8 +1,7 @@
-import 'package:core/core.dart';
-import '../provider/popular_tvseries_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
 import '../widgets/tvseries_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PopularTVSeriesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -18,8 +17,7 @@ class _PopularTVSeriesPageState extends State<PopularTVSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<PopularTVSeriesNotifier>(context, listen: false)
-            .fetchPopularTVSeries());
+        context.read<PopularTVSeriesBloc>().add(const FetchPopularTVSeries()));
   }
 
   @override
@@ -30,25 +28,32 @@ class _PopularTVSeriesPageState extends State<PopularTVSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularTVSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.popularState == RequestState.Loading) {
+        child: BlocBuilder<PopularTVSeriesBloc, PopularTVSeriesState>(
+          builder: (context, state) {
+            if (state is PopularTVSeriesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.popularState == RequestState.Loaded) {
+            } else if (state is PopularTVSeriesLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvseries = data.popularTVSeries[index];
+                  final tvseries = state.tvSeries[index];
                   return TVSeriesCard(tvSeries: tvseries);
                 },
-                itemCount: data.popularTVSeries.length,
+                itemCount: state.tvSeries.length,
               );
-            } else {
+            } else if (state is PopularTVSeriesError) {
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
+            } else if (state is PopularTVSeriesEmpty) {
+              return const Center(
+                key: Key('empty_message'),
+                child: Text('Tidak ada data'),
+              );
+            } else {
+              return Container();
             }
           },
         ),

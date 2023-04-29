@@ -9,8 +9,7 @@ part 'on_air_tvseries_event.dart';
 class OnAirTVSeriesBloc extends Bloc<OnAirTVSeriesEvent, OnAirTVSeriesState> {
   final GetOnAirTVSeries getOnAirTVSeries;
 
-  OnAirTVSeriesBloc(this.getOnAirTVSeries)
-      : super(OnAirTVSeriesEmpty()) {
+  OnAirTVSeriesBloc(this.getOnAirTVSeries) : super(OnAirTVSeriesEmpty()) {
     on<FetchOnAirTVSeries>((event, emit) async {
       emit(OnAirTVSeriesLoading());
       final result = await getOnAirTVSeries.execute();

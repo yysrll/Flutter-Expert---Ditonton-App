@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import 'package:tvseries/domain/usecases/get_on_air_tvseries.dart';
 import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
 
-import '../../dummy_data/dummy_object.dart';
+import '../../../dummy_data/dummy_object.dart';
 import 'on_air_bloc_test.mocks.dart';
 
 @GenerateMocks([GetOnAirTVSeries])
@@ -27,7 +27,8 @@ void main() {
     expect(onAirTVSeriesBloc.state, OnAirTVSeriesEmpty());
   });
 
-  blocTest<OnAirTVSeriesBloc, OnAirTVSeriesState>('Should emit [Loading, HasData] when data is gotten successfully',
+  blocTest<OnAirTVSeriesBloc, OnAirTVSeriesState>(
+      'Should emit [Loading, HasData] when data is gotten successfully',
       build: () {
         when(mockGetOnAirTVSeries.execute())
             .thenAnswer((_) async => Right(testTVSeriesList));
@@ -42,7 +43,8 @@ void main() {
         verify(mockGetOnAirTVSeries.execute());
       });
 
-  blocTest<OnAirTVSeriesBloc, OnAirTVSeriesState>('Should emit [Loading, Error] when get on air tvseries is unsuccessful',
+  blocTest<OnAirTVSeriesBloc, OnAirTVSeriesState>(
+      'Should emit [Loading, Error] when get on air tvseries is unsuccessful',
       build: () {
         when(mockGetOnAirTVSeries.execute()).thenAnswer(
             (_) async => const Left(ServerFailure('Server Failure')));
@@ -62,8 +64,8 @@ void main() {
   blocTest<OnAirTVSeriesBloc, OnAirTVSeriesState>(
       'Should emit [Loading, Empty] when get empty on air tvseries',
       build: () {
-        when(mockGetOnAirTVSeries.execute()).thenAnswer(
-            (_) async => const Right(<TVSeries>[]));
+        when(mockGetOnAirTVSeries.execute())
+            .thenAnswer((_) async => const Right(<TVSeries>[]));
         return onAirTVSeriesBloc;
       },
       act: (bloc) => bloc.add(const FetchOnAirTVSeries()),

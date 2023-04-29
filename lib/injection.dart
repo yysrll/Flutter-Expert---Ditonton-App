@@ -26,7 +26,7 @@ import 'package:movies/presentation/blocs/search/search_movies_bloc.dart';
 import 'package:movies/presentation/blocs/top_rated/top_rated_movies_bloc.dart';
 import 'package:movies/presentation/blocs/watchlist/watchlist_movie_bloc.dart';
 import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
-import 'package:tvseries/presentation/provider/popular_tvseries_notifier.dart';
+import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
 import 'package:tvseries/presentation/provider/top_rated_tvseries_notifier.dart';
 import 'package:tvseries/presentation/provider/tvseries_detail_notifier.dart';
 import 'package:tvseries/presentation/provider/tvseries_list_notifier.dart';
@@ -89,7 +89,7 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => PopularTVSeriesNotifier(
+    () => PopularTVSeriesBloc(
       locator(),
     ),
   );
