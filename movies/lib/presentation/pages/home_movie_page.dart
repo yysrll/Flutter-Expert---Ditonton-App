@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:core/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.dart';
+import 'package:movies/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:movies/presentation/pages/movie_detail_page.dart';
 import 'package:movies/presentation/pages/now_playing_movies_page.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
@@ -28,9 +29,9 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
     super.initState();
     Future.microtask(() {
       context.read<NowPlayingMoviesBloc>().add(const FetchNowPlayingMovies());
+      context.read<PopularMoviesBloc>().add(const FetchPopularMovies());
       Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchPopularMovies()
-        ..fetchTopRatedMovies();
+          .fetchTopRatedMovies();
     });
   }
 
@@ -72,16 +73,20 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 onTap: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
+                  builder: (context, state) {
+                if (state is PopularMoviesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
-                } else {
+                } else if (state is PopularMoviesLoaded) {
+                  return MovieList(state.movies);
+                } else if (state is PopularMoviesError) {
                   return const Text('Failed');
+                } else if (state is PopularMoviesEmpty) {
+                  return const Text('Tidak ada data');
+                } else {
+                  return Container();
                 }
               }),
               _buildSubHeading(
