@@ -11,13 +11,13 @@ import 'package:movies/presentation/blocs/now_playing/now_playing_movies_bloc.da
 import 'package:movies/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:movies/presentation/blocs/search/search_movies_bloc.dart';
 import 'package:movies/presentation/blocs/top_rated/top_rated_movies_bloc.dart';
+import 'package:movies/presentation/blocs/watchlist/watchlist_movie_bloc.dart';
 import 'package:movies/presentation/pages/home_movie_page.dart';
 import 'package:movies/presentation/pages/movie_detail_page.dart';
 import 'package:movies/presentation/pages/now_playing_movies_page.dart';
 import 'package:movies/presentation/pages/popular_movies_page.dart';
 import 'package:movies/presentation/pages/search_page.dart';
 import 'package:movies/presentation/pages/top_rated_movies_page.dart';
-import 'package:movies/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:tvseries/presentation/pages/home_tv_series_page.dart';
@@ -64,8 +64,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<PopularMoviesBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistMovieBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TVSeriesListNotifier>(),
