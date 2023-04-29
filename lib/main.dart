@@ -22,6 +22,8 @@ import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
 import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
+import 'package:tvseries/presentation/blocs/search/search_tvseries_bloc.dart';
+import 'package:tvseries/presentation/blocs/top_rated/top_rated_tvseries_bloc.dart';
 import 'package:tvseries/presentation/pages/home_tv_series_page.dart';
 import 'package:tvseries/presentation/pages/on_air_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/popular_tvseries_page.dart';
@@ -29,7 +31,6 @@ import 'package:tvseries/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/tvseries_detail_page.dart';
 import 'package:tvseries/presentation/pages/tvseries_search_page.dart';
 import 'package:tvseries/presentation/provider/tvseries_detail_notifier.dart';
-import 'package:tvseries/presentation/provider/tvseries_search_notifier.dart';
 import 'package:tvseries/presentation/provider/watchlist_tvseries_notifier.dart';
 
 void main() async {
@@ -69,13 +70,13 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<PopularTVSeriesBloc>(),
         ),
         BlocProvider(
-          create: (_) => di.locator<TopRatedMoviesBloc>(),
+          create: (_) => di.locator<TopRatedTVSeriesBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TVSeriesDetailNotifier>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TVSeriesSearchNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<SearchTVSeriesBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTVSeriesNotifier>(),

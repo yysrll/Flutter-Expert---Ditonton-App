@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
-import '../provider/tvseries_search_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tvseries/presentation/blocs/search/search_tvseries_bloc.dart';
 import '../widgets/tvseries_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TVSeriesSearchPage extends StatelessWidget {
   // ignore: constant_identifier_names
@@ -21,9 +21,8 @@ class TVSeriesSearchPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
-                Provider.of<TVSeriesSearchNotifier>(context, listen: false)
-                    .fetchTVSeriesSearch(query);
+              onChanged: (query) {
+                context.read<SearchTVSeriesBloc>().add(OnQueryChange(query));
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -37,25 +36,32 @@ class TVSeriesSearchPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<TVSeriesSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.Loading) {
+            BlocBuilder<SearchTVSeriesBloc, SearchTVSeriesState>(
+              builder: (context, state) {
+                if (state is SearchTVSeriesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (data.state == RequestState.Loaded) {
-                  final result = data.searchResult;
+                } else if (state is SearchTVSeriesLoaded) {
                   return Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final tvseries = data.searchResult[index];
+                        final tvseries = state.tvSeriesList[index];
                         return TVSeriesCard(
                           tvSeries: tvseries,
                         );
                       },
-                      itemCount: result.length,
+                      itemCount: state.tvSeriesList.length,
                     ),
+                  );
+                } else if (state is SearchTVSeriesError) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                } else if (state is SearchTVSeriesEmpty) {
+                  return const Center(
+                    child: Text('Tidak ada data'),
                   );
                 } else {
                   return Expanded(
