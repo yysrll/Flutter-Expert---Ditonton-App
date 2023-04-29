@@ -178,7 +178,7 @@ void main() {
 
   group('added to watchlist movie', () {
     blocTest<MovieDetailBloc, MovieDetailState>(
-        'Should emit [Loading, Loaded] when added to watchlist movie success and set isAddedToWatchlist to true',
+        'Should emit isAddedToWatchlist to true when added to watchlist success',
         build: () {
           when(saveWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => const Right('Added to Watchlist'));
@@ -203,7 +203,7 @@ void main() {
         });
 
     blocTest<MovieDetailBloc, MovieDetailState>(
-        'Should emit [Loading, Loaded] when added to watchlist movie failed',
+        'Should emit isAddedToWatchlist to false when added to watchlist failed',
         build: () {
           when(saveWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => const Left(DatabaseFailure('error')));
@@ -226,7 +226,7 @@ void main() {
 
   group('remove from watchlist movie', () {
     blocTest<MovieDetailBloc, MovieDetailState>(
-        'Should emit [Loading, Loaded] when remove from watchlist movie success and set isAddedToWatchlist to false',
+        'Should emit isAddedToWatchlist to false when remove from watchlist success',
         build: () {
           when(removeWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => const Right('Removed from Watchlist'));
@@ -247,7 +247,7 @@ void main() {
         });
 
     blocTest<MovieDetailBloc, MovieDetailState>(
-        'Should emit [Loading, Loaded] when remove from watchlist movie failed',
+        'Should emit watchlistMessage error when remove from watchlist failed',
         build: () {
           when(removeWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => const Left(DatabaseFailure('error')));
