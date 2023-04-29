@@ -28,9 +28,7 @@ import 'package:tvseries/presentation/pages/popular_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/tvseries_detail_page.dart';
 import 'package:tvseries/presentation/pages/tvseries_search_page.dart';
-import 'package:tvseries/presentation/provider/top_rated_tvseries_notifier.dart';
 import 'package:tvseries/presentation/provider/tvseries_detail_notifier.dart';
-import 'package:tvseries/presentation/provider/tvseries_list_notifier.dart';
 import 'package:tvseries/presentation/provider/tvseries_search_notifier.dart';
 import 'package:tvseries/presentation/provider/watchlist_tvseries_notifier.dart';
 
@@ -67,14 +65,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<WatchlistMovieBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TVSeriesListNotifier>(),
-        ),
         BlocProvider(
           create: (_) => di.locator<PopularTVSeriesBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTVSeriesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMoviesBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TVSeriesDetailNotifier>(),

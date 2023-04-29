@@ -5,13 +5,12 @@ import 'package:core/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tvseries/presentation/blocs/on_air/on_air_tvseries_bloc.dart';
 import 'package:tvseries/presentation/blocs/popular/popular_tvseries_bloc.dart';
+import 'package:tvseries/presentation/blocs/top_rated/top_rated_tvseries_bloc.dart';
 import 'package:tvseries/presentation/pages/on_air_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/popular_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:tvseries/presentation/pages/tvseries_detail_page.dart';
-import '../provider/tvseries_list_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeTVSeriesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -30,8 +29,7 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     Future.microtask(() {
       context.read<OnAirTVSeriesBloc>().add(const FetchOnAirTVSeries());
       context.read<PopularTVSeriesBloc>().add(const FetchPopularTVSeries());
-      Provider.of<TVSeriesListNotifier>(context, listen: false)
-          .fetchTopRatedTVSeries();
+      context.read<TopRatedTVSeriesBloc>().add(const FetchTopRatedTVSeries());
     });
   }
 
@@ -93,16 +91,20 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
                 onTap: () => Navigator.pushNamed(
                     context, TopRatedTVSeriesPage.ROUTE_NAME),
               ),
-              Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TopRatedTVSeriesBloc, TopRatedTVSeriesState>(
+                  builder: (context, state) {
+                if (state is TopRatedTVSeriesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TVSeriesList(data.topRatedTVSeries);
-                } else {
+                } else if (state is TopRatedTVSeriesLoaded) {
+                  return TVSeriesList(state.tvSeries);
+                } else if (state is TopRatedTVSeriesError) {
                   return const Text('Failed');
+                } else if (state is TopRatedTVSeriesEmpty) {
+                  return const Text('Tidak ada data');
+                } else {
+                  return Container();
                 }
               }),
             ],
