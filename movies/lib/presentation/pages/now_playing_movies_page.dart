@@ -39,22 +39,18 @@ class _NowPlayingMoviesPageState extends State<NowPlayingMoviesPage> {
             );
           } else if (state is NowPlayingMoviesLoaded) {
             final result = state.movies;
-            return Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemBuilder: (context, index) {
-                  final movie = result[index];
-                  return MovieCard(movie);
-                },
-                itemCount: result.length,
-              ),
+            return ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemBuilder: (context, index) {
+                final movie = result[index];
+                return MovieCard(movie);
+              },
+              itemCount: result.length,
             );
           } else if (state is NowPlayingMoviesError) {
-            return Expanded(
-              child: Center(
-                key: const Key('error_message'),
-                child: Text(state.message),
-              ),
+            return Center(
+              key: const Key('error_message'),
+              child: Text(state.message),
             );
           } else {
             return const SizedBox.shrink();
